@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import "./font/happy-family-cufonfonts/Happy Family.otf"
+import "./font/girly_2/girly.ttf"
 
 import App from './App';
 

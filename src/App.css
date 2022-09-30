@@ -1,0 +1,13 @@
+@font-face {
+    font-family: "Happy Family";
+    src: url("./font/happy-family-cufonfonts/Happy Family.otf");
+}
+
+@font-face {
+    font-family: "girly";
+    src: url("./font/girly_2/girly.ttf");
+}
+
+p {
+    font-family: "Happy Family";
+}
