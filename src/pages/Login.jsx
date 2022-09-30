@@ -6,18 +6,7 @@ import { InptStyle ,RessourceStyle,LoginButton, Inspiration} from '../styles/tou
 
 const Login = () => {
     return (
-        /*
-        <div style={ {backgroundColor:"rgba(229, 229, 229, 1)"}}>
-            <Container >
-                <Row className='justify-content-center'>
-                    <Col md="9" lg='6'> <img src={logo} alt=''/></Col>
-                    <Col> 
-                        hi</Col>
-                </Row>
-
-            </Container>
-        </div>
-        */
+      
         <div style={ {backgroundColor:"rgba(229, 229, 229, 1)", padding:"8%"}}>
            
             <section class="vh-100" >
@@ -60,7 +49,7 @@ const Login = () => {
 
                                 <div class="text-center text-lg-center mt-4 pt-2">
                                     <LoginButton>Login</LoginButton>
-                                    <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!"
+                                    <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/Register"
                                         >Register</a></p>
                                 </div>
 
