@@ -4,11 +4,20 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { InptStyle ,RessourceStyle,LoginButton, Inspiration} from '../styles/tout';
 import axios from "axios"
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+
+
 
 
 const Login = () => {
+    const navigate=useNavigate()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loginStatus , setLoginStatus]=useState("")
+    const [session ,setSession]=useState({})
+   
+    
+
     const handleSubmit=(e)=> {
         e.preventDefault()
         const register ={
@@ -20,8 +29,16 @@ const Login = () => {
         axios.post("http://localhost:3001/api/v1/auth/",register)
         .then(reponse=>{
         console.log(reponse)
+        setLoginStatus(true)
+
+        localStorage.setItem("data",JSON.stringify (reponse.data))
+        localStorage.setItem("loginStatus", loginStatus)
+        console.log(localStorage.getItem("data"))
+        
+        navigate("/home")
         })
         .catch((err)=>{
+            setLoginStatus("false")
             Swal.fire({
             text:"the email or password is incorrect",
             icon: "error",

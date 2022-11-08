@@ -27,6 +27,10 @@ const UserDetailsSchema = new mongoose.Schema({
         required: [true, "Please provide password"],
         select: false
     },
+    role: {
+        type: String,
+        required: [true, "Please provide password"],
+    }
 }, {
     collection: "userInfo",
 });

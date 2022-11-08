@@ -9,68 +9,69 @@ import { InptStyle, RessourceStyle, LoginButton, Inspiration } from '../styles/t
 
 const Register = () => {
     const [name, setName] = useState("");
-    const [email,setEmail] = useState("")
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("");
     const [conPassword, setConPassword] = useState("");
-    var error="";
+    const [niveau, setNiveau] = useState("");
+
+    var error = "email is already used";
 
 
-const correctSubmit=()=>{
-    let validate=true;
-    if (name==="" || email ==="" || password==="" || conPassword===""){
-        error="Please provide all values"
-        validate=false;
+    const correctSubmit = () => {
+
+        if (name === "" || email === "" || password === "" || conPassword === "" || niveau==="" ) {
+            error = "Please provide all values"
+        }
+        if (password !== conPassword) {
+            error = "votre mot de passe incorrecte"
+        }
+
     }
-    if (password!==conPassword){
-        error="votre mot de passe incorrecte"
-        validate=false;
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const register = {
+            name: name,
+            email: email,
+            password: password,
+            role:niveau
+        }
+
+
+
+
+        correctSubmit()
+        axios.post("http://localhost:3001/api/v1/auth/register", register)
+            .then(reponse => {
+                console.log(reponse)
+                Swal.fire({
+                    title: "Compte créé",
+                    text: "merci, votre compte a été créé",
+                    icon: "success",
+                    width: 400,
+                    heightAuto: false,
+                    confirmButtonColor: "#396FAD",
+
+                    confirmButtonText: "Ok!",
+                });
+            })
+            .catch((err) => {
+                console.log(err)
+                Swal.fire({
+                    text: error,
+                    icon: "error",
+                    width: 400,
+                    heightAuto: false,
+                    confirmButtonColor: "#5095D6",
+
+                    confirmButtonText: "Ok!",
+                })
+            })
+
+
+
     }
-
-}
-const handleSubmit=(e)=> {
-    e.preventDefault()
-    const register ={
-        name:name,
-        email:email,
-        password:password
-    }
-
-
-   
-
-    correctSubmit()
-    axios.post("http://localhost:3001/api/v1/auth/register",register)
-    .then(reponse=>{
-    console.log(reponse)
-    Swal.fire({
-        title: "Compte créé",
-        text: "merci, votre compte a été créé",
-        icon: "success",
-        width: 400,
-        heightAuto: false,
-        confirmButtonColor: "#396FAD",
-
-        confirmButtonText: "Ok!",
-      });
-    })
-    .catch((err)=>{
-        console.log(err)
-        Swal.fire({
-        text:error,
-        icon: "error",
-        width: 400,
-        heightAuto: false,
-        confirmButtonColor: "#5095D6",
-
-        confirmButtonText: "Ok!",
-        })
-    })
-
- 
-
-}
     return (
-        <div style={{ backgroundColor: "rgba(229, 229, 229, 1)", padding: "8%"  }}>
+        <div style={{ backgroundColor: "rgba(229, 229, 229, 1)", padding: "8%" }}>
 
             <section class="vh-100" >
 
@@ -85,54 +86,63 @@ const handleSubmit=(e)=> {
                                     <RessourceStyle>Ressources</RessourceStyle>
 
                                 </div>
-                                <div class="form-outline mb-4" style={{ padding: "0" }}>
-                                    <input 
+                                <div class="form-outline mb-4" >
+                                    <input
                                         name={name}
-                                        type="text" 
-                                        id="form3Example3" 
+                                        type="text"
+                                        id="form3Example3"
                                         class="form-control form-control-lg"
                                         placeholder="Enter your name"
-                                        onChange={(e)=>{setName(e.target.value)}} />
+                                        onChange={(e) => { setName(e.target.value) }} />
 
                                 </div>
-                                <div class="form-outline mb-4" style={{ padding: "10px" }}>
-                                    <input 
-                                        name={email}
-                                        type="email" 
-                                        id="form3Example3" 
-                                        class="form-control form-control-lg"
-                                        placeholder="Enter a valid email address" 
-                                        onChange={(e)=>{setEmail(e.target.value)}}/>
-
-                                </div>
-
-
-                                <div class="form-outline mb-4" style={{ padding: "10px" }}>
+                                <div class="form-outline mb-4" >
                                     <input
-                                        name={password} 
-                                        type="password" 
-                                        id="form3Example4" 
+                                        name={email}
+                                        type="email"
+                                        id="form3Example3"
                                         class="form-control form-control-lg"
-                                        placeholder="Enter password" 
-                                        onChange={(e)=>{setPassword(e.target.value)}}/>
+                                        placeholder="Enter a valid email address"
+                                        onChange={(e) => { setEmail(e.target.value) }} />
 
                                 </div>
-                                <div class="form-outline mb-4" style={{ padding: "10px" }}>
-                                    <input 
+
+
+                                <div class="form-outline mb-4">
+                                    <input
+                                        name={password}
+                                        type="password"
+                                        id="form3Example4"
+                                        class="form-control form-control-lg"
+                                        placeholder="Enter password"
+                                        onChange={(e) => { setPassword(e.target.value) }} />
+
+                                </div>
+                                <div class="form-outline mb-4" >
+                                    <input
                                         name={conPassword}
                                         type="password"
-                                        id="form3Example4" 
+                                        id="form3Example4"
                                         class="form-control form-control-lg"
-                                        placeholder="repeat password" 
-                                        onChange={(e)=>{setConPassword(e.target.value)}}
-                                        />
+                                        placeholder="repeat password"
+                                        onChange={(e) => { setConPassword(e.target.value) }}
+                                    />
 
                                 </div>
+                                <div class="form-outline mb-4" >
+                                    <select class="form-select" id="form3Example3" name={niveau} aria-label="Default select example" onChange={(e)=>{setNiveau(e.target.value)}}>
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">INE1</option>
+                                        <option value="2">INE2</option>
+                                        <option value="3">INE3</option>
+                                        <option value="4">LAUREAT</option>
 
+                                    </select>
+                                </div>
 
                                 <div class="text-center text-lg-center mt-4 pt-2">
                                     <LoginButton onClick={handleSubmit}>sign up</LoginButton>
-                                    
+
                                 </div>
 
                             </form>
