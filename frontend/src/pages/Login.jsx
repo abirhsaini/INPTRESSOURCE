@@ -5,16 +5,17 @@ import { InptStyle ,RessourceStyle,LoginButton, Inspiration} from '../styles/tou
 import axios from "axios"
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 
 
 
-const Login = () => {
+const Login = ({ setToken }) => {
     const navigate=useNavigate()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loginStatus , setLoginStatus]=useState("")
-    const [session ,setSession]=useState({})
+    const [islogged,setislogged] = useState(false)
+
    
     
 
@@ -25,20 +26,18 @@ const Login = () => {
             password:password,
         }
 
-
+        
         axios.post("http://localhost:3001/api/v1/auth/",register)
         .then(reponse=>{
-        console.log(reponse)
-        setLoginStatus(true)
+        setislogged(true)
+        localStorage.setItem("islogged",islogged)    
+        localStorage.setItem("token",reponse.data.user.token)
 
-        localStorage.setItem("data",JSON.stringify (reponse.data))
-        localStorage.setItem("loginStatus", loginStatus)
-        console.log(localStorage.getItem("data"))
-        
+        console.log(localStorage.getItem("token"))
         navigate("/home")
         })
         .catch((err)=>{
-            setLoginStatus("false")
+      
             Swal.fire({
             text:"the email or password is incorrect",
             icon: "error",
@@ -123,4 +122,7 @@ const Login = () => {
     );
 };
 
+Login.propTypes = {
+    setToken: PropTypes.func.isRequired
+  }
 export default Login;

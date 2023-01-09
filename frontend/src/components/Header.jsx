@@ -1,10 +1,8 @@
 import React from 'react';
-import {useSelector , useDispatch}  from "react-redux"
-import axios from "axios";
+
 
 const Header = () => {
-    const data =localStorage.getItem("data")
-    console.log(data)
+  
 
     return (
         <div>
